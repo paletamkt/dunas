@@ -26,15 +26,23 @@ import { getFirestore, doc, setDoc, getDoc, collection,
          getDocs, updateDoc, addDoc, deleteDoc, onSnapshot }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const FIREBASE_CONFIG = {
-  apiKey:            "COLE_AQUI_SUA_apiKey",
-  authDomain:        "COLE_AQUI_SEU_authDomain",
-  projectId:         "COLE_AQUI_SEU_projectId",
-  storageBucket:     "COLE_AQUI_SEU_storageBucket",
-  messagingSenderId: "COLE_AQUI_SEU_messagingSenderId",
-  appId:             "COLE_AQUI_SEU_appId"
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAcn9zJ--TvleZcoP4kMXj1UaDW18zVbnM",
+  authDomain: "dunas-arruda.firebaseapp.com",
+  projectId: "dunas-arruda",
+  storageBucket: "dunas-arruda.firebasestorage.app",
+  messagingSenderId: "88542062989",
+  appId: "1:88542062989:web:c33d95cd6e0184b86835c4"
 };
 
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
 
 import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
