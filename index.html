@@ -36,25 +36,6 @@ const FIREBASE_CONFIG = {
 };
 
 
-import { initializeApp }        from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, setDoc, getDoc, collection,
-         getDocs, updateDoc, addDoc, deleteDoc, onSnapshot }
-  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-// ══════════════════════════════════════════
-//  ⚠ SUBSTITUA PELOS SEUS DADOS DO FIREBASE
-// ══════════════════════════════════════════
-const FIREBASE_CONFIG = {
-  apiKey:            "AIzaSyAcn9zJ--TvleZcoP4kMXj1UaDW18zVbnM",
-  authDomain:        "dunas-arruda.firebaseapp.com",
-  projectId:         "dunas-arruda",
-  storageBucket:     "dunas-arruda.firebasestorage.app",
-  messagingSenderId: "88542062989",
-  appId:             "1:88542062989:web:c33d95cd6e0184b86835c4"
-};
-// ══════════════════════════════════════════
 
 const app  = initializeApp(FIREBASE_CONFIG);
 const auth = getAuth(app);
