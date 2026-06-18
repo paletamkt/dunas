@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Dunas Residencial</title>
+<!--
+  Este arquivo é necessário para que as URLs por aba funcionem
+  (ex: seudominio.com.br/obra, seudominio.com.br/conteudo).
+
+  O GitHub Pages é um servidor estático: ele não sabe que "/obra"
+  deveria carregar o mesmo index.html. Quando alguém acessa essa
+  URL diretamente (ou recarrega a página), o GitHub Pages não acha
+  o arquivo e mostra a página de erro 404 — a menos que exista um
+  404.html, que ele carrega automaticamente nesse caso.
+
+  Este script redireciona de volta para o index.html, preservando
+  o caminho original, para que o painel abra na aba correta.
+-->
+<script>
+  sessionStorage.setItem("dunas-redirect-path", window.location.pathname);
+  window.location.replace(
+    window.location.pathname.split("/").slice(0, -1).join("/") + "/"
+  );
+</script>
+</head>
+<body></body>
+</html>
