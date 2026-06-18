@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Dunas — Seed Firebase</title>
+<script type="module">
+import { initializeApp }  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, signInWithEmailAndPassword }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, setDoc, writeBatch, collection }
+  from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyAcn9zJ--TvleZcoP4kMXj1UaDW18zVbnM",
+  authDomain:        "dunas-arruda.firebaseapp.com",
+  projectId:         "dunas-arruda",
+  storageBucket:     "dunas-arruda.firebasestorage.app",
+  messagingSenderId: "88542062989",
+  appId:             "1:88542062989:web:c33d95cd6e0184b86835c4"
+};
+
+const app  = initializeApp(FIREBASE_CONFIG);
+const auth = getAuth(app);
+const db   = getFirestore(app);
+
+// ─── DADOS REAIS DUNAS RESIDENCIAL ───────────────────
+// 82/91 vendidas = 90% — Jun/2026
+
+const UNITS = (() => {
+  const u = {};
+  for (let f = 1; f <= 13; f++) {
+    for (let i = 0; i < 7; i++) {
+      const key = f + "-" + i;
+      if (f <= 11)       u[key] = "sold";
+      else if (f === 12) u[key] = i <= 4 ? "sold" : "available";
+      else               u[key] = "available";
+    }
+  }
+  // Andar 12, finais 06 e 07 (idx 5,6) = disponíveis (9 unidades disponíveis total)
+  return u;
+})();
+
+const PHASES = [
+  {
+    id:"p1", order:1,
+    name:"Fundação e Estrutura",
+    dates:"Jan 2025 — Jul 2025",
+    status:"done", progress:100,
+    tags:["Terraplanagem ✓","Estacas ✓","Radier ✓","Pilares e lajes ✓","Contenções ✓"]
+  },
+  {
+    id:"p2", order:2,
+    name:"Alvenaria e Vedações",
+    dates:"Jun 2025 — Out 2025",
+    status:"done", progress:100,
+    tags:["Divisórias internas ✓","Vedações externas ✓","Esquadrias ✓","Impermeabilização ✓"]
+  },
+  {
+    id:"p3", order:3,
+    name:"Instalações Elétricas e Hidráulicas",
+    dates:"Set 2025 — Fev 2026",
+    status:"done", progress:100,
+    tags:["Elétrica ✓","Hidráulica ✓","Gás ✓","Automação ✓","SPDA ✓"]
+  },
+  {
+    id:"p4", order:4,
+    name:"Revestimentos e Acabamentos",
+    dates:"Jan 2026 — Jul 2026",
+    status:"active", progress:55,
+    tags:["Porcelanato 90×90 — em execução","Reboco e gesso — em execução","Pintura","Bancadas","Fechaduras eletrônicas"]
+  },
+  {
+    id:"p5", order:5,
+    name:"Áreas Comuns e Rooftop",
+    dates:"Mai 2026 — Set 2026",
+    status:"planned", progress:0,
+    tags:["Lobby e hall","Academia","Piscina Rooftop","Open Living Space","Pet Place","Coworking","Brinquedoteca"]
+  },
+  {
+    id:"p6", order:6,
+    name:"Entrega das Chaves",
+    dates:"Dezembro 2026",
+    status:"milestone", progress:0,
+    tags:["Habite-se","Vistoria técnica","Entrega de chaves","Pós-entrega"]
+  }
+];
+
+const CONTENT = [
+  // SESSÃO 1 — Abr/Mai 2026 (entregue)
+  {id:"s1v01",title:"Apresentação do Dunas — o que é, onde fica, por que importa",format:"Reel",date:"2026-04-07",status:"published",notes:"V1 Sessão 1 — abertura da série"},
+  {id:"s1v02",title:"Localização: o bairro que mais valoriza em Manaus",format:"Reel",date:"2026-04-10",status:"published",notes:"Adrianópolis / Vila Municipal — argumento geográfico"},
+  {id:"s1v03",title:"HOUSI: o que muda quando o seu apê é gerenciado",format:"Reel",date:"2026-04-14",status:"published",notes:"Parceria HOUSI — diferencial de gestão"},
+  {id:"s1v04",title:"Studio inteligente: como 27m² viram um apê completo",format:"Reel",date:"2026-04-17",status:"published",notes:"Tipologia Studio — plantas e uso do espaço"},
+  {id:"s1v05",title:"Rooftop com piscina infinita — lazer no último andar",format:"Reel",date:"2026-04-21",status:"published",notes:"Área de lazer — gancho visual forte"},
+  {id:"s1v06",title:"Dunas como investimento: números que fazem sentido",format:"Reel",date:"2026-04-24",status:"published",notes:"Ângulo investidor — cap rate, Airbnb, liquidez"},
+  {id:"s1v07",title:"Por que 90% já foi vendido antes de ficar pronto?",format:"Reel",date:"2026-04-28",status:"published",notes:"Prova social — urgência de vendas"},
+  {id:"s1v08",title:"PavPlus: a tecnologia que eliminou pilares no Dunas",format:"Reel",date:"2026-05-01",status:"published",notes:"Matheus apresenta — claim verificado: menos pilares = ambientes mais abertos"},
+  {id:"s1v09",title:"Dunas e o Porto: a 10 minutos do coração de Manaus",format:"Reel",date:"2026-05-05",status:"published",notes:"⚠ Confirmar distâncias reais antes de republicar"},
+  {id:"s1v10",title:"Últimas unidades: o que ainda está disponível",format:"Reel",date:"2026-05-08",status:"published",notes:"V10 — fechamento Sessão 1 / CTA direto"},
+  // SÉRIE PORTO DE MANAUS — Sessão 2
+  {id:"s2v01",title:"Turistas no Porto falam do Dunas — reação espontânea",format:"Reel",date:"2026-07-04",status:"planned",notes:"Entrevistas em inglês com turistas — Matheus conduz"},
+  {id:"s2v02",title:"O porto visto de quem mora perto — segunda entrevista",format:"Reel",date:"2026-07-07",status:"planned",notes:"Segundo bloco — variar perfis de turistas"},
+  {id:"s2v03",title:"Matheus no Porto: o que os turistas nos ensinaram sobre o Dunas",format:"Reel",date:"2026-07-11",status:"planned",notes:"Síntese — conecta depoimentos ao argumento de valorização"},
+  {id:"s2v04",title:"Morar perto do Porto não é sorte — é estratégia",format:"Reel",date:"2026-07-14",status:"planned",notes:"Argumento direto câmera — relaciona localização à tese de investimento"},
+  {id:"s2v05",title:"Do Porto ao Dunas: quanto tempo leva de cada ponto da cidade?",format:"Reel",date:"2026-07-18",status:"planned",notes:"⚠ MEDIR distâncias reais antes da gravação — placeholder no roteiro"},
+  // CONTEÚDO DE OBRA
+  {id:"obra01",title:"Visita de obra — andamento atual (Jun/2026)",format:"Reel",date:"2026-06-20",status:"planned",notes:"Prova de Obra — mostrar evolução real da construção"},
+  {id:"obra02",title:"Acabamentos: porcelanato 90×90 sendo instalado",format:"Reel",date:"2026-07-25",status:"planned",notes:"Diferencial técnico visível — registrar na obra"}
+];
+
+// ─── SEED ─────────────────────────────────────────────
+function log(msg, type="info") {
+  const el = document.getElementById("log");
+  const line = document.createElement("div");
+  line.className = "log-line " + type;
+  line.textContent = msg;
+  el.appendChild(line);
+  el.scrollTop = el.scrollHeight;
+}
+
+function progress(pct, label) {
+  document.getElementById("prog-bar").style.width = pct + "%";
+  document.getElementById("prog-label").textContent = label;
+}
+
+async function runSeed() {
+  const email = document.getElementById("email").value.trim();
+  const pass  = document.getElementById("pass").value;
+  const btn   = document.getElementById("run-btn");
+
+  if (!email || !pass) { log("Preencha e-mail e senha.", "error"); return; }
+
+  btn.disabled = true;
+  btn.textContent = "Executando...";
+  document.getElementById("prog-wrap").style.display = "block";
+
+  try {
+    // 1. Login
+    log("🔐 Autenticando...");
+    progress(5, "Autenticando...");
+    await signInWithEmailAndPassword(auth, email, pass);
+    log("✓ Autenticado com sucesso.", "ok");
+
+    // 2. Units — usar writeBatch para velocidade
+    log("🏢 Gravando unidades (91)...");
+    progress(15, "Gravando unidades...");
+
+    const unitEntries = Object.entries(UNITS);
+    const BATCH_SIZE = 490; // Firestore max 500
+    for (let i = 0; i < unitEntries.length; i += BATCH_SIZE) {
+      const batch = writeBatch(db);
+      unitEntries.slice(i, i + BATCH_SIZE).forEach(([key, status]) => {
+        batch.set(doc(db, "dunas", "dados", "units", key), { status });
+      });
+      await batch.commit();
+    }
+    log(`✓ ${unitEntries.length} unidades gravadas (82 vendidas, 9 disponíveis).`, "ok");
+    progress(50, "Unidades gravadas...");
+
+    // 3. Phases
+    log("🏗 Gravando cronograma (6 fases)...");
+    const pBatch = writeBatch(db);
+    PHASES.forEach(p => {
+      pBatch.set(doc(db, "dunas", "dados", "phases", p.id), p);
+    });
+    await pBatch.commit();
+    log("✓ 6 fases do cronograma gravadas.", "ok");
+    progress(75, "Cronograma gravado...");
+
+    // 4. Content
+    log("📅 Gravando planejamento de conteúdo (17 itens)...");
+    const cBatch = writeBatch(db);
+    CONTENT.forEach(c => {
+      cBatch.set(doc(db, "dunas", "dados", "content", c.id), c);
+    });
+    await cBatch.commit();
+    log("✓ 17 itens de conteúdo gravados.", "ok");
+    progress(100, "Concluído!");
+
+    // Done
+    log("", "");
+    log("════════════════════════════════════", "ok");
+    log("✅  Firebase populado com sucesso!", "ok");
+    log("    Abra o painel principal agora.", "ok");
+    log("════════════════════════════════════", "ok");
+    btn.textContent = "✓ Concluído";
+    btn.style.background = "#4a7c4e";
+
+  } catch(e) {
+    log("✗ Erro: " + e.message, "error");
+    btn.disabled = false;
+    btn.textContent = "Tentar novamente";
+    progress(0, "Erro");
+  }
+}
+
+window.runSeed = runSeed;
+document.addEventListener("DOMContentLoaded", () => {
+  const p = document.getElementById("pass");
+  if (p) p.addEventListener("keydown", e => { if(e.key==="Enter") runSeed(); });
+});
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#0B0A07;color:#EDE8DC;font-family:"DM Sans",system-ui,sans-serif;
+  display:flex;align-items:center;justify-content:center;min-height:100vh;padding:20px;}
+.card{background:rgba(255,248,230,.04);border:1px solid rgba(201,169,110,.2);
+  border-radius:14px;padding:36px;width:100%;max-width:520px;}
+.title{font-size:22px;font-weight:600;color:#C9A96E;margin-bottom:4px;}
+.sub{font-size:13px;color:#8A8070;margin-bottom:28px;}
+.field{margin-bottom:16px;}
+label{display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:#8A8070;margin-bottom:7px;}
+input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+  border-radius:8px;padding:11px 14px;font:14px system-ui;color:#EDE8DC;outline:none;}
+input:focus{border-color:rgba(201,169,110,.4);}
+button{width:100%;background:#C9A96E;border:none;border-radius:8px;padding:13px;
+  font:600 14px system-ui;color:#1A1208;cursor:pointer;margin-top:8px;
+  transition:opacity .2s;}
+button:hover:not(:disabled){opacity:.85;}
+button:disabled{opacity:.5;cursor:not-allowed;}
+#prog-wrap{display:none;margin-top:20px;}
+.prog-track{height:4px;background:rgba(255,255,255,.07);border-radius:2px;margin-bottom:8px;overflow:hidden;}
+#prog-bar{height:100%;background:#C9A96E;border-radius:2px;width:0%;transition:width .4s ease;}
+#prog-label{font-size:11px;color:#8A8070;letter-spacing:.06em;}
+#log{margin-top:20px;background:rgba(0,0,0,.3);border-radius:8px;padding:14px;
+  font:12px "DM Mono",monospace;max-height:220px;overflow-y:auto;display:none;}
+#log:not(:empty){display:block;}
+.log-line{margin-bottom:4px;color:#8A8070;}
+.log-line.ok{color:#7EB87A;}
+.log-line.error{color:#E87A7A;}
+.warning{background:rgba(232,168,48,.08);border:1px solid rgba(232,168,48,.2);
+  border-radius:8px;padding:12px 14px;font-size:12px;color:#E8A830;margin-bottom:20px;line-height:1.6;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="title">Dunas Residencial</div>
+  <div class="sub">Seed de dados — Firebase Firestore</div>
+
+  <div class="warning">
+    ⚠ Este script <strong>sobrescreve</strong> todos os dados existentes no Firebase.<br>
+    Execute apenas uma vez, ou quando quiser resetar para os dados base.<br>
+    Use suas credenciais de acesso ao painel.
+  </div>
+
+  <div class="field">
+    <label>E-mail</label>
+    <input id="email" type="email" placeholder="seu@email.com" value="luiz@paletamarketing.com.br">
+  </div>
+  <div class="field">
+    <label>Senha</label>
+    <input id="pass" type="password" placeholder="••••••••">
+  </div>
+
+  <button id="run-btn" onclick="runSeed()">▶ Popular Firebase agora</button>
+
+  <div id="prog-wrap">
+    <div class="prog-track"><div id="prog-bar"></div></div>
+    <div id="prog-label"></div>
+  </div>
+
+  <div id="log"></div>
+</div>
+</body>
+</html>
