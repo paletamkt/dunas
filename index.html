@@ -67,14 +67,17 @@ let contentItems = [];
 
 // ─── DEFAULT UNIT STATE (~85% vendido) ───
 function buildDefault() {
+  // 82/91 vendidas ≈ 90% — dados reais Dunas Residencial (Jun/2026)
+  // Andares 1-11: 100% vendidos (77 un.)
+  // Andar 12: finais 01,02,03,04,05 vendidos (5 un.) = 82 total
+  // Andar 13: disponíveis
   const s = {};
   for (let f=1; f<=13; f++) {
     for (let u=0; u<7; u++) {
       const k = f+"-"+u;
-      if (f<=10) s[k]="sold";
-      else if (f===11) s[k]=[1,2,3,5,6].includes(u)?"sold":"available";
-      else if (f===12) s[k]=u>=5?"sold":"available";
-      else s[k]="available";
+      if (f<=11)      s[k] = "sold";
+      else if (f===12) s[k] = u<=4 ? "sold" : "available";
+      else             s[k] = "available";
     }
   }
   return s;
@@ -82,33 +85,68 @@ function buildDefault() {
 
 // ─── DEFAULT PHASES ───────────────────────
 const DEFAULT_PHASES = [
-  {id:"p1", order:1, name:"Fundação e Estrutura",
-   dates:"Jan 2025 — Jul 2025", status:"done", progress:100,
-   tags:["Terraplanagem","Estacas","Radier","Pilares e lajes"]},
-  {id:"p2", order:2, name:"Alvenaria e Vedações",
-   dates:"Jun 2025 — Out 2025", status:"done", progress:100,
-   tags:["Divisórias internas","Vedações externas","Esquadrias","Impermeabilização"]},
-  {id:"p3", order:3, name:"Instalações Elétricas e Hidráulicas",
-   dates:"Set 2025 — Fev 2026", status:"active", progress:78,
-   tags:["Elétrica ✓","Hidráulica ✓","Gás — em execução","Automação","SPDA"]},
-  {id:"p4", order:4, name:"Revestimentos e Acabamentos",
-   dates:"Jan 2026 — Jul 2026", status:"active", progress:32,
-   tags:["Porcelanato 90×90 — em exec.","Reboco e gesso","Pintura","Bancadas","Fechaduras eletrônicas"]},
-  {id:"p5", order:5, name:"Áreas Comuns e Rooftop",
-   dates:"Mai 2026 — Set 2026", status:"planned", progress:0,
-   tags:["Lobby e hall","Academia","Piscina Rooftop","Open Living","Pet Place","Coworking"]},
-  {id:"p6", order:6, name:"Entrega das Chaves",
-   dates:"Dezembro 2026", status:"milestone", progress:0,
-   tags:["Habite-se","Vistoria técnica","Entrega de chaves"]}
+  {id:"p1",order:1,name:"Fundação e Estrutura",
+   dates:"Jan 2025 — Jul 2025",status:"done",progress:100,
+   completedAt:"2025-07-31",
+   tags:["Terraplanagem","Estacas","Radier","Pilares e lajes","Contenções"],
+   updates:[
+     {date:"2025-07-31",note:"Fase concluída. Estrutura aprovada pela engenharia."}
+   ]},
+  {id:"p2",order:2,name:"Alvenaria e Vedações",
+   dates:"Jun 2025 — Out 2025",status:"done",progress:100,
+   completedAt:"2025-10-30",
+   tags:["Divisórias internas","Vedações externas","Esquadrias","Impermeabilização"],
+   updates:[
+     {date:"2025-10-30",note:"Fase concluída. Impermeabilização aprovada."}
+   ]},
+  {id:"p3",order:3,name:"Instalações Elétricas e Hidráulicas",
+   dates:"Set 2025 — Fev 2026",status:"done",progress:100,
+   completedAt:"2026-02-28",
+   tags:["Elétrica ✓","Hidráulica ✓","Gás ✓","Automação ✓","SPDA ✓"],
+   updates:[
+     {date:"2026-02-28",note:"Fase concluída. Todas as instalações aprovadas."}
+   ]},
+  {id:"p4",order:4,name:"Revestimentos e Acabamentos",
+   dates:"Jan 2026 — Jul 2026",status:"active",progress:55,
+   completedAt:null,
+   tags:["Porcelanato 90×90 — em execução","Reboco e gesso — em execução","Pintura","Bancadas","Fechaduras eletrônicas"],
+   updates:[
+     {date:"2026-06-11",note:"Porcelanato 90×90 em andamento nos andares 1–7. Andares 8–13 previstos para Jul."}
+   ]},
+  {id:"p5",order:5,name:"Áreas Comuns e Rooftop",
+   dates:"Mai 2026 — Set 2026",status:"planned",progress:0,
+   completedAt:null,
+   tags:["Lobby e hall","Academia","Piscina Rooftop","Open Living Space","Pet Place","Coworking","Brinquedoteca"],
+   updates:[]},
+  {id:"p6",order:6,name:"Entrega das Chaves",
+   dates:"Dezembro 2026",status:"milestone",progress:0,
+   completedAt:null,
+   tags:["Habite-se","Vistoria técnica","Entrega de chaves","Pós-entrega"],
+   updates:[]}
 ];
 
 // ─── DEFAULT CONTENT ITEMS ────────────────
 const DEFAULT_CONTENT = [
-  {id:"c1", title:"Visita de obra — andamento estrutural", format:"Reel", date:"2026-06-20", status:"planned", notes:""},
-  {id:"c2", title:"Depoimento comprador — investidor",     format:"Reel", date:"2026-06-27", status:"planned", notes:""},
-  {id:"c3", title:"PavPlus — menos pilares, mais espaço",  format:"Reel", date:"2026-07-04", status:"planned", notes:"Matheus apresenta"},
-  {id:"c4", title:"Vista do rooftop — piscina infinita",   format:"Story",date:"2026-07-11", status:"planned", notes:""},
-  {id:"c5", title:"Comparativo: Dunas vs mercado",         format:"Reel", date:"2026-07-18", status:"planned", notes:""}
+  // ── SESSÃO 1 — Abr/Mai 2026 (10 roteiros entregues) ──
+  {id:"s1v01",title:"Apresentação do Dunas — o que é, onde fica, por que importa",format:"Reel",date:"2026-04-07",status:"published",notes:"V1 Sessão 1 — abertura da série"},
+  {id:"s1v02",title:"Localização: o bairro que mais valoriza em Manaus",format:"Reel",date:"2026-04-10",status:"published",notes:"Adrianópolis — argumento geográfico"},
+  {id:"s1v03",title:"HOUSI: o que muda quando o seu apê é gerenciado",format:"Reel",date:"2026-04-14",status:"published",notes:"Parceria HOUSI — diferencial de gestão"},
+  {id:"s1v04",title:"Studio inteligente: como 27m² viram um apê completo",format:"Reel",date:"2026-04-17",status:"published",notes:"Tipologia Studio — plantas e uso do espaço"},
+  {id:"s1v05",title:"Rooftop com piscina infinita — lazer no último andar",format:"Reel",date:"2026-04-21",status:"published",notes:"Área de lazer — gancho visual forte"},
+  {id:"s1v06",title:"Dunas como investimento: números que fazem sentido",format:"Reel",date:"2026-04-24",status:"published",notes:"Ângulo investidor — cap rate, Airbnb, liquidez"},
+  {id:"s1v07",title:"Por que 90% já foi vendido antes de ficar pronto?",format:"Reel",date:"2026-04-28",status:"published",notes:"Prova social — urgência de vendas"},
+  {id:"s1v08",title:"PavPlus: a tecnologia que eliminou pilares no Dunas",format:"Reel",date:"2026-05-01",status:"published",notes:"Matheus apresenta — claim verificado: menos pilares = ambientes mais abertos"},
+  {id:"s1v09",title:"Dunas e o Porto: a 10 minutos do coração de Manaus",format:"Reel",date:"2026-05-05",status:"published",notes:"⚠ Confirmar distâncias reais antes de publicar"},
+  {id:"s1v10",title:"Últimas unidades: o que ainda está disponível",format:"Reel",date:"2026-05-08",status:"published",notes:"V10 — fechamento Sessão 1 / CTA direto"},
+  // ── SÉRIE PORTO DE MANAUS — Sessão 2 (planejada) ──
+  {id:"s2v01",title:"Turistas no Porto falam do Dunas — reação espontânea",format:"Reel",date:"2026-07-04",status:"planned",notes:"Entrevistas em inglês com turistas — Matheus conduz"},
+  {id:"s2v02",title:"O porto visto de quem mora perto — segunda entrevista",format:"Reel",date:"2026-07-07",status:"planned",notes:"Segundo bloco — variar perfis de turistas"},
+  {id:"s2v03",title:"Matheus no Porto: o que os turistas nos ensinaram sobre o Dunas",format:"Reel",date:"2026-07-11",status:"planned",notes:"Síntese — conecta depoimentos ao argumento de valorização"},
+  {id:"s2v04",title:"Morar perto do Porto não é sorte — é estratégia",format:"Reel",date:"2026-07-14",status:"planned",notes:"Argumento direto — câmera Matheus. Relaciona localização à tese de investimento"},
+  {id:"s2v05",title:"Do Porto ao Dunas: quanto tempo leva de cada ponto da cidade?",format:"Reel",date:"2026-07-18",status:"planned",notes:"⚠ MEDIR distâncias reais antes da gravação — placeholder no roteiro V5"},
+  // ── CONTEÚDO DE OBRA ──
+  {id:"obra01",title:"Visita de obra — andamento atual (Jun/2026)",format:"Reel",date:"2026-06-20",status:"planned",notes:"Prova de Obra — mostrar evolução real da construção"},
+  {id:"obra02",title:"Acabamentos: porcelanato 90×90 sendo instalado",format:"Reel",date:"2026-07-25",status:"planned",notes:"Diferencial técnico visível — registrar na obra"}
 ];
 
 // ─── FIRESTORE ────────────────────────────
@@ -382,66 +420,211 @@ function closeUnitModal() { document.getElementById("unit-modal").classList.remo
 
 // ─── PHASES RENDER ────────────────────────
 function renderPhases() {
-  const cont=document.getElementById("phases-container"); if(!cont) return;
-  cont.innerHTML="";
-  phases.forEach(p=>{
-    const isMilestone=p.status==="milestone";
-    const badge={done:"Concluído",active:"Em andamento",planned:"Planejado",milestone:"Previsto"}[p.status]||"Planejado";
-    const bClass={done:"done",active:"curr",planned:"plan",milestone:"plan"}[p.status]||"plan";
-    const dotClass={done:"done",active:"curr",milestone:"star"}[p.status]||"";
-    const checkSvg=`<svg width="7" height="5" viewBox="0 0 7 5"><path d="M1 2.5L2.5 4L6 1" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>`;
-    const tagsHtml=p.tags.map(t=>`<span class="ph-tag">${t}</span>`).join("");
-    const barHtml=!isMilestone?`<div class="ph-bar"><div class="ph-fill ${bClass==="curr"?"curr":bClass}" style="width:${p.progress}%"></div></div>`:"";
-    const div=document.createElement("div"); div.className="tl-phase";
-    div.innerHTML=`
-      <div class="tl-dot ${dotClass}">${p.status==="done"?checkSvg:""}</div>
+  const cont = document.getElementById("phases-container");
+  if (!cont) return;
+  cont.innerHTML = "";
+
+  phases.forEach(p => {
+    const isMilestone = p.status === "milestone";
+    const badge  = {done:"Concluído",active:"Em andamento",planned:"Planejado",milestone:"Previsto"}[p.status]||"Planejado";
+    const bClass = {done:"done",active:"curr",planned:"plan",milestone:"plan"}[p.status]||"plan";
+    const dotClass = {done:"done",active:"curr",milestone:"star"}[p.status]||"";
+    const checkSvg = `<svg width="7" height="5" viewBox="0 0 7 5"><path d="M1 2.5L2.5 4L6 1" stroke="var(--bg)" stroke-width="1.5" stroke-linecap="round" fill="none"/></svg>`;
+    const tagsHtml = (p.tags||[]).map(t => `<span class="ph-tag">${t}</span>`).join("");
+    const barHtml  = !isMilestone
+      ? `<div class="ph-bar"><div class="ph-fill ${bClass==="curr"?"curr":bClass}" style="width:${p.progress}%"></div></div>` : "";
+
+    // Updates history inline
+    const updates = p.updates || [];
+    const updatesHtml = updates.length
+      ? `<div class="ph-updates">
+          ${updates.slice().reverse().map(u => `
+            <div class="ph-update-item">
+              <span class="ph-update-date">${formatDateBR(u.date)}</span>
+              <span class="ph-update-note">${u.note}</span>
+            </div>`).join("")}
+         </div>` : "";
+
+    // Completion date
+    const completedHtml = p.completedAt
+      ? `<div class="ph-completed">✓ Concluído em ${formatDateBR(p.completedAt)}</div>` : "";
+
+    const div = document.createElement("div");
+    div.className = "tl-phase";
+    div.innerHTML = `
+      <div class="tl-dot ${dotClass}">${p.status==="done" ? checkSvg : ""}</div>
       <div class="ph-card ${p.status==="active"?"active":""} ${isMilestone?"star":""}">
         <div class="ph-head">
-          <div><div class="ph-name ${isMilestone?"gold":""}">${p.name}</div><div class="ph-dates">${p.dates}</div></div>
-          <div style="display:flex;gap:8px;align-items:center">
+          <div>
+            <div class="ph-name ${isMilestone?"gold":""}">${p.name}</div>
+            <div class="ph-dates">${p.dates}</div>
+            ${completedHtml}
+          </div>
+          <div style="display:flex;gap:6px;align-items:center;flex-shrink:0">
             <div class="ph-badge ${bClass}">${badge}</div>
-            <button class="icon-btn" onclick="openPhaseModal('${p.id}')" title="Editar">✏️</button>
+            <button class="icon-btn" onclick="openUpdateModal('${p.id}')" title="Adicionar atualização">📝</button>
+            <button class="icon-btn" onclick="openPhaseModal('${p.id}')" title="Editar fase">✏️</button>
           </div>
         </div>
         <div class="ph-tags">${tagsHtml}</div>
         ${barHtml}
+        ${updatesHtml}
       </div>`;
     cont.appendChild(div);
   });
-  // Geral
-  const totalDone=phases.filter(p=>p.status==="done").length;
-  const activeProg=phases.find(p=>p.status==="active")?.progress||0;
-  const geral=Math.round((totalDone*100+activeProg)/(phases.filter(p=>p.status!=="milestone").length));
-  const gv=document.getElementById("geral-val"); if(gv) gv.textContent=geral+"%";
-  const gbar=document.getElementById("geral-bar"); if(gbar) gbar.style.width=geral+"%";
+
+  // Add new phase button
+  const addBtn = document.createElement("div");
+  addBtn.className = "tl-phase";
+  addBtn.innerHTML = `
+    <div class="tl-dot" style="border-color:rgba(255,255,255,.1)"></div>
+    <button class="btn-add-phase" onclick="openNewPhaseModal()">
+      + Adicionar próxima etapa
+    </button>`;
+  cont.appendChild(addBtn);
+
+  // Sidebar: geral
+  const donePh  = phases.filter(p => p.status==="done" && p.id!=="p6").length;
+  const totalPh = phases.filter(p => p.status!=="milestone").length;
+  const activePh = phases.find(p => p.status==="active");
+  const geral = Math.round((donePh * 100 + (activePh?.progress||0)) / totalPh);
+  const gv = document.getElementById("geral-val"); if (gv) gv.textContent = geral + "%";
+  const gb = document.getElementById("geral-bar"); if (gb) gb.style.width = geral + "%";
+
+  // Sidebar: histórico
+  renderHistorico();
+}
+
+function formatDateBR(d) {
+  if (!d) return "";
+  try {
+    const [y,m,day] = d.split("-");
+    const months = ["Jan","Fev","Mar","Abr","Mai","Jun","Jul","Ago","Set","Out","Nov","Dez"];
+    return `${day}/${months[parseInt(m)-1]}/${y.slice(2)}`;
+  } catch(e) { return d; }
+}
+
+function renderHistorico() {
+  const cont = document.getElementById("historico-container");
+  if (!cont) return;
+
+  // Collect all updates across phases
+  const all = [];
+  phases.forEach(p => {
+    (p.updates||[]).forEach(u => all.push({...u, phaseName: p.name, phaseId: p.id}));
+    if (p.completedAt) {
+      const already = all.find(x => x.phaseId===p.id && x.date===p.completedAt);
+      if (!already) all.push({date:p.completedAt, note:`Fase concluída.`, phaseName:p.name, phaseId:p.id, isCompletion:true});
+    }
+  });
+  all.sort((a,b) => b.date.localeCompare(a.date));
+
+  if (!all.length) {
+    cont.innerHTML = `<div style="color:var(--text-d);font-size:12px;padding:8px 0">Nenhuma atualização registrada.</div>`;
+    return;
+  }
+
+  cont.innerHTML = all.map(u => `
+    <div class="hist-item">
+      <div class="hist-dot" style="background:${u.isCompletion?"var(--green)":"var(--gold)"}"></div>
+      <div>
+        <div class="hist-phase">${u.phaseName}</div>
+        <div class="hist-note">${u.note}</div>
+        <div class="hist-date">${formatDateBR(u.date)}</div>
+      </div>
+    </div>`).join("");
 }
 
 // ─── PHASE MODAL ──────────────────────────
 function openPhaseModal(id) {
-  const p=phases.find(x=>x.id===id); if(!p) return;
-  document.getElementById("pm-id").value=id;
-  document.getElementById("pm-name").value=p.name;
-  document.getElementById("pm-dates").value=p.dates;
-  document.getElementById("pm-status").value=p.status;
-  document.getElementById("pm-progress").value=p.progress;
-  document.getElementById("pm-progress-val").textContent=p.progress+"%";
-  document.getElementById("pm-tags").value=p.tags.join("\n");
+  const p = phases.find(x => x.id===id); if (!p) return;
+  document.getElementById("pm-id").value       = id;
+  document.getElementById("pm-name").value     = p.name;
+  document.getElementById("pm-dates").value    = p.dates;
+  document.getElementById("pm-status").value   = p.status;
+  document.getElementById("pm-progress").value = p.progress;
+  document.getElementById("pm-progress-val").textContent = p.progress + "%";
+  document.getElementById("pm-tags").value     = (p.tags||[]).join("\n");
+  document.getElementById("pm-completed").value = p.completedAt || "";
   document.getElementById("phase-modal").classList.add("open");
 }
 
+function openNewPhaseModal() {
+  const newId = "p" + Date.now();
+  const newOrder = Math.max(...phases.map(p=>p.order||0)) + 1;
+  // Add blank phase to array temporarily
+  phases.push({id:newId,order:newOrder,name:"",dates:"",status:"planned",progress:0,
+               completedAt:null,tags:[],updates:[]});
+  openPhaseModal(newId);
+}
+
+// Update modal — add timestamped note to a phase
+function openUpdateModal(id) {
+  document.getElementById("um2-phase-id").value = id;
+  const p = phases.find(x=>x.id===id);
+  document.getElementById("um2-title").textContent = p ? p.name : "Fase";
+  document.getElementById("um2-date").value = new Date().toISOString().slice(0,10);
+  document.getElementById("um2-note").value = "";
+  document.getElementById("update-modal").classList.add("open");
+}
+
+async function saveUpdate() {
+  const id   = document.getElementById("um2-phase-id").value;
+  const date = document.getElementById("um2-date").value;
+  const note = document.getElementById("um2-note").value.trim();
+  if (!note) { toast("Escreva uma atualização.","error"); return; }
+
+  const p = phases.find(x=>x.id===id);
+  if (!p) return;
+  if (!p.updates) p.updates = [];
+  p.updates.push({date, note});
+
+  // If marking complete via update
+  const statusSel = document.getElementById("um2-status").value;
+  const patch = {updates: p.updates};
+  if (statusSel === "done" && p.status !== "done") {
+    patch.status = "done";
+    patch.progress = 100;
+    patch.completedAt = date;
+    p.status = "done"; p.progress = 100; p.completedAt = date;
+  }
+
+  try { await updateDoc(doc(db,"dunas","dados","phases",id), patch); }
+  catch(e) { console.error(e); }
+
+  renderPhases();
+  closeUpdateModal();
+  toast("Atualização registrada");
+}
+
+function closeUpdateModal() { document.getElementById("update-modal").classList.remove("open"); }
+
 async function savePhase() {
-  const id=document.getElementById("pm-id").value;
-  const data={
-    name:     document.getElementById("pm-name").value,
-    dates:    document.getElementById("pm-dates").value,
-    status:   document.getElementById("pm-status").value,
-    progress: parseInt(document.getElementById("pm-progress").value)||0,
-    tags:     document.getElementById("pm-tags").value.split("\n").map(t=>t.trim()).filter(Boolean)
+  const id = document.getElementById("pm-id").value;
+  const status = document.getElementById("pm-status").value;
+  const completedAt = document.getElementById("pm-completed").value || null;
+  const data = {
+    name:        document.getElementById("pm-name").value,
+    dates:       document.getElementById("pm-dates").value,
+    status,
+    progress:    parseInt(document.getElementById("pm-progress").value)||0,
+    tags:        document.getElementById("pm-tags").value.split("\n").map(t=>t.trim()).filter(Boolean),
+    completedAt: status==="done" && completedAt ? completedAt : (status==="done" ? new Date().toISOString().slice(0,10) : null)
   };
-  await updatePhase(id,data);
+  // Check if it's a new phase (not yet in Firestore)
+  const existing = phases.find(p=>p.id===id);
+  if (existing && !existing.name) {
+    // New phase — set doc
+    data.order = existing.order;
+    data.updates = [];
+    await setDoc(doc(db,"dunas","dados","phases",id), data);
+    Object.assign(existing, data);
+  } else {
+    await updatePhase(id, data);
+  }
   renderPhases();
   closePhaseModal();
-  toast("Fase atualizada");
+  toast("Fase salva");
 }
 
 function closePhaseModal() { document.getElementById("phase-modal").classList.remove("open"); }
@@ -1046,6 +1229,28 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
 
 /* Stat card "Em Negociação" orange */
 .stat-val.orange { color: #E8A830; }
+
+/* PHASE UPDATES */
+.ph-updates { margin-top:12px; border-top:1px solid rgba(255,255,255,.05); padding-top:10px; }
+.ph-update-item { display:flex; gap:8px; margin-bottom:7px; align-items:baseline; }
+.ph-update-date { font-family:"DM Mono",monospace; font-size:10px; color:var(--text-d); flex-shrink:0; white-space:nowrap; }
+.ph-update-note { font-size:11px; color:var(--text-m); line-height:1.5; }
+.ph-completed { font-size:11px; color:var(--green); margin-top:2px; letter-spacing:.03em; }
+
+/* ADD PHASE BUTTON */
+.btn-add-phase { background:none; border:1px dashed rgba(255,255,255,.1); border-radius:8px;
+  padding:12px 20px; font:12px "DM Sans",sans-serif; color:var(--text-d); cursor:pointer;
+  width:100%; text-align:left; transition:all .25s; letter-spacing:.04em; }
+.btn-add-phase:hover { border-color:rgba(201,169,110,.3); color:var(--gold); background:rgba(201,169,110,.04); }
+
+/* HISTORICO */
+.hist-item { display:flex; gap:10px; margin-bottom:14px; padding-bottom:14px;
+  border-bottom:1px solid rgba(255,255,255,.05); }
+.hist-item:last-child { border-bottom:none; margin-bottom:0; padding-bottom:0; }
+.hist-dot { width:7px; height:7px; border-radius:50%; flex-shrink:0; margin-top:3px; }
+.hist-phase { font-size:11px; font-weight:600; color:var(--text); margin-bottom:2px; }
+.hist-note { font-size:11px; color:var(--text-m); line-height:1.5; margin-bottom:3px; }
+.hist-date { font-family:"DM Mono",monospace; font-size:10px; color:var(--text-d); }
 </style>
 </head>
 <body>
@@ -1259,13 +1464,16 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
         <div class="stat-sub">da obra concluída</div>
         <div class="ph-bar" style="margin-top:14px"><div class="ph-fill curr" id="geral-bar" style="width:0%"></div></div>
       </div>
-      <div class="type-card">
-        <div class="card-title">Marcos Registrados</div>
+      <div class="type-card" style="margin-bottom:14px">
+        <div class="card-title">Marcos Legais</div>
         <div class="milestone-item"><div class="ms-dot" style="background:var(--green)"></div><div><div class="ms-name">Aprovação Municipal</div><div class="ms-date">Dez 2024 · Proc. 10564/2024</div></div></div>
         <div class="milestone-item"><div class="ms-dot" style="background:var(--green)"></div><div><div class="ms-name">Registro de Incorporação</div><div class="ms-date">Jul 2025 · R-2-110417</div></div></div>
         <div class="milestone-item"><div class="ms-dot" style="background:var(--green)"></div><div><div class="ms-name">Início das obras</div><div class="ms-date">Janeiro 2025</div></div></div>
-        <div class="milestone-item"><div class="ms-dot" style="background:var(--gold)"></div><div><div class="ms-name">Fase atual</div><div class="ms-date">Instalações + Acabamentos</div></div></div>
         <div class="milestone-item"><div class="ms-dot" style="background:var(--text-d)"></div><div><div class="ms-name">Entrega prevista</div><div class="ms-date">Dezembro 2026</div></div></div>
+      </div>
+      <div class="type-card">
+        <div class="card-title" style="margin-bottom:14px">Histórico de Atualizações</div>
+        <div id="historico-container"></div>
       </div>
     </div>
   </div>
@@ -1341,7 +1549,8 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
       <label class="modal-lbl">Progresso — <span id="pm-progress-val">0%</span></label>
       <input class="modal-range" id="pm-progress" type="range" min="0" max="100" value="0">
     </div>
-    <div class="modal-field"><label class="modal-lbl">Marcos (um por linha)</label><textarea class="modal-textarea" id="pm-tags"></textarea></div>
+    <div class="modal-field"><label class="modal-lbl">Marcos / Etapas (um por linha)</label><textarea class="modal-textarea" id="pm-tags"></textarea></div>
+    <div class="modal-field"><label class="modal-lbl">Data de conclusão (se concluída)</label><input class="modal-input" id="pm-completed" type="date"></div>
     <div class="modal-footer">
       <button class="btn-cancel" onclick="closePhaseModal()">Cancelar</button>
       <button class="btn-primary" onclick="savePhase()">Salvar fase</button>
@@ -1426,5 +1635,27 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
 })();
 </script>
 
+
+<!-- ── UPDATE MODAL ──────────────────────────────────── -->
+<div class="modal-overlay" id="update-modal">
+  <div class="modal">
+    <div class="modal-title">📝 Adicionar Atualização</div>
+    <div style="font-size:13px;color:var(--gold);margin-bottom:20px;font-family:'Cormorant Garamond',serif" id="um2-title"></div>
+    <input type="hidden" id="um2-phase-id">
+    <div class="modal-field"><label class="modal-lbl">Data</label><input class="modal-input" id="um2-date" type="date"></div>
+    <div class="modal-field"><label class="modal-lbl">O que aconteceu / próximo passo</label><textarea class="modal-textarea" id="um2-note" placeholder="Ex: Porcelanato concluído nos andares 1–7. Próximo: andares 8–13 na semana do dia 20." style="min-height:100px"></textarea></div>
+    <div class="modal-field">
+      <label class="modal-lbl">Marcar fase como concluída?</label>
+      <select class="modal-select" id="um2-status">
+        <option value="keep">Manter status atual</option>
+        <option value="done">Sim — marcar como Concluída</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancel" onclick="closeUpdateModal()">Cancelar</button>
+      <button class="btn-primary" onclick="saveUpdate()">Registrar</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>
