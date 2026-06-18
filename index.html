@@ -86,41 +86,41 @@ function buildDefault() {
 // ─── DEFAULT PHASES ───────────────────────
 const DEFAULT_PHASES = [
   {id:"p1",order:1,name:"Fundação e Estrutura",
-   dates:"Jan 2025 — Jul 2025",status:"done",progress:100,
-   completedAt:"2025-07-31",
+   dates:"Jan 2025 — Jul 2025",startDate:"2025-01-01",status:"done",progress:100,
+   completedAt:"2025-07-31",createdAt:1,
    tags:["Terraplanagem","Estacas","Radier","Pilares e lajes","Contenções"],
    updates:[
      {date:"2025-07-31",note:"Fase concluída. Estrutura aprovada pela engenharia."}
    ]},
   {id:"p2",order:2,name:"Alvenaria e Vedações",
-   dates:"Jun 2025 — Out 2025",status:"done",progress:100,
-   completedAt:"2025-10-30",
+   dates:"Jun 2025 — Out 2025",startDate:"2025-06-01",status:"done",progress:100,
+   completedAt:"2025-10-30",createdAt:2,
    tags:["Divisórias internas","Vedações externas","Esquadrias","Impermeabilização"],
    updates:[
      {date:"2025-10-30",note:"Fase concluída. Impermeabilização aprovada."}
    ]},
   {id:"p3",order:3,name:"Instalações Elétricas e Hidráulicas",
-   dates:"Set 2025 — Fev 2026",status:"done",progress:100,
-   completedAt:"2026-02-28",
+   dates:"Set 2025 — Fev 2026",startDate:"2025-09-01",status:"done",progress:100,
+   completedAt:"2026-02-28",createdAt:3,
    tags:["Elétrica ✓","Hidráulica ✓","Gás ✓","Automação ✓","SPDA ✓"],
    updates:[
      {date:"2026-02-28",note:"Fase concluída. Todas as instalações aprovadas."}
    ]},
   {id:"p4",order:4,name:"Revestimentos e Acabamentos",
-   dates:"Jan 2026 — Jul 2026",status:"active",progress:55,
-   completedAt:null,
+   dates:"Jan 2026 — Jul 2026",startDate:"2026-01-01",status:"active",progress:55,
+   completedAt:null,createdAt:4,
    tags:["Porcelanato 90×90 — em execução","Reboco e gesso — em execução","Pintura","Bancadas","Fechaduras eletrônicas"],
    updates:[
      {date:"2026-06-11",note:"Porcelanato 90×90 em andamento nos andares 1–7. Andares 8–13 previstos para Jul."}
    ]},
   {id:"p5",order:5,name:"Áreas Comuns e Rooftop",
-   dates:"Mai 2026 — Set 2026",status:"planned",progress:0,
-   completedAt:null,
+   dates:"Mai 2026 — Set 2026",startDate:"2026-05-01",status:"planned",progress:0,
+   completedAt:null,createdAt:5,
    tags:["Lobby e hall","Academia","Piscina Rooftop","Open Living Space","Pet Place","Coworking","Brinquedoteca"],
    updates:[]},
   {id:"p6",order:6,name:"Entrega das Chaves",
-   dates:"Dezembro 2026",status:"milestone",progress:0,
-   completedAt:null,
+   dates:"Dezembro 2026",startDate:"2026-12-01",status:"milestone",progress:0,
+   completedAt:null,createdAt:6,
    tags:["Habite-se","Vistoria técnica","Entrega de chaves","Pós-entrega"],
    updates:[]}
 ];
@@ -128,25 +128,25 @@ const DEFAULT_PHASES = [
 // ─── DEFAULT CONTENT ITEMS ────────────────
 const DEFAULT_CONTENT = [
   // ── SESSÃO 1 — Abr/Mai 2026 (10 roteiros entregues) ──
-  {id:"s1v01",title:"Apresentação do Dunas — o que é, onde fica, por que importa",format:"Reel",date:"2026-04-07",status:"published",notes:"V1 Sessão 1 — abertura da série"},
-  {id:"s1v02",title:"Localização: o bairro que mais valoriza em Manaus",format:"Reel",date:"2026-04-10",status:"published",notes:"Adrianópolis — argumento geográfico"},
-  {id:"s1v03",title:"HOUSI: o que muda quando o seu apê é gerenciado",format:"Reel",date:"2026-04-14",status:"published",notes:"Parceria HOUSI — diferencial de gestão"},
-  {id:"s1v04",title:"Studio inteligente: como 27m² viram um apê completo",format:"Reel",date:"2026-04-17",status:"published",notes:"Tipologia Studio — plantas e uso do espaço"},
-  {id:"s1v05",title:"Rooftop com piscina infinita — lazer no último andar",format:"Reel",date:"2026-04-21",status:"published",notes:"Área de lazer — gancho visual forte"},
-  {id:"s1v06",title:"Dunas como investimento: números que fazem sentido",format:"Reel",date:"2026-04-24",status:"published",notes:"Ângulo investidor — cap rate, Airbnb, liquidez"},
-  {id:"s1v07",title:"Por que 90% já foi vendido antes de ficar pronto?",format:"Reel",date:"2026-04-28",status:"published",notes:"Prova social — urgência de vendas"},
-  {id:"s1v08",title:"PavPlus: a tecnologia que eliminou pilares no Dunas",format:"Reel",date:"2026-05-01",status:"published",notes:"Matheus apresenta — claim verificado: menos pilares = ambientes mais abertos"},
-  {id:"s1v09",title:"Dunas e o Porto: a 10 minutos do coração de Manaus",format:"Reel",date:"2026-05-05",status:"published",notes:"⚠ Confirmar distâncias reais antes de publicar"},
-  {id:"s1v10",title:"Últimas unidades: o que ainda está disponível",format:"Reel",date:"2026-05-08",status:"published",notes:"V10 — fechamento Sessão 1 / CTA direto"},
+  {id:"s1v01",createdAt:1,title:"Apresentação do Dunas — o que é, onde fica, por que importa",format:"Reel",date:"2026-04-07",status:"published",notes:"V1 Sessão 1 — abertura da série"},
+  {id:"s1v02",createdAt:2,title:"Localização: o bairro que mais valoriza em Manaus",format:"Reel",date:"2026-04-10",status:"published",notes:"Adrianópolis — argumento geográfico"},
+  {id:"s1v03",createdAt:3,title:"HOUSI: o que muda quando o seu apê é gerenciado",format:"Reel",date:"2026-04-14",status:"published",notes:"Parceria HOUSI — diferencial de gestão"},
+  {id:"s1v04",createdAt:4,title:"Studio inteligente: como 27m² viram um apê completo",format:"Reel",date:"2026-04-17",status:"published",notes:"Tipologia Studio — plantas e uso do espaço"},
+  {id:"s1v05",createdAt:5,title:"Rooftop com piscina infinita — lazer no último andar",format:"Reel",date:"2026-04-21",status:"published",notes:"Área de lazer — gancho visual forte"},
+  {id:"s1v06",createdAt:6,title:"Dunas como investimento: números que fazem sentido",format:"Reel",date:"2026-04-24",status:"published",notes:"Ângulo investidor — cap rate, Airbnb, liquidez"},
+  {id:"s1v07",createdAt:7,title:"Por que 90% já foi vendido antes de ficar pronto?",format:"Reel",date:"2026-04-28",status:"published",notes:"Prova social — urgência de vendas"},
+  {id:"s1v08",createdAt:8,title:"PavPlus: a tecnologia que eliminou pilares no Dunas",format:"Reel",date:"2026-05-01",status:"published",notes:"Matheus apresenta — claim verificado: menos pilares = ambientes mais abertos"},
+  {id:"s1v09",createdAt:9,title:"Dunas e o Porto: a 10 minutos do coração de Manaus",format:"Reel",date:"2026-05-05",status:"published",notes:"⚠ Confirmar distâncias reais antes de publicar"},
+  {id:"s1v10",createdAt:10,title:"Últimas unidades: o que ainda está disponível",format:"Reel",date:"2026-05-08",status:"published",notes:"V10 — fechamento Sessão 1 / CTA direto"},
   // ── SÉRIE PORTO DE MANAUS — Sessão 2 (planejada) ──
-  {id:"s2v01",title:"Turistas no Porto falam do Dunas — reação espontânea",format:"Reel",date:"2026-07-04",status:"planned",notes:"Entrevistas em inglês com turistas — Matheus conduz"},
-  {id:"s2v02",title:"O porto visto de quem mora perto — segunda entrevista",format:"Reel",date:"2026-07-07",status:"planned",notes:"Segundo bloco — variar perfis de turistas"},
-  {id:"s2v03",title:"Matheus no Porto: o que os turistas nos ensinaram sobre o Dunas",format:"Reel",date:"2026-07-11",status:"planned",notes:"Síntese — conecta depoimentos ao argumento de valorização"},
-  {id:"s2v04",title:"Morar perto do Porto não é sorte — é estratégia",format:"Reel",date:"2026-07-14",status:"planned",notes:"Argumento direto — câmera Matheus. Relaciona localização à tese de investimento"},
-  {id:"s2v05",title:"Do Porto ao Dunas: quanto tempo leva de cada ponto da cidade?",format:"Reel",date:"2026-07-18",status:"planned",notes:"⚠ MEDIR distâncias reais antes da gravação — placeholder no roteiro V5"},
+  {id:"s2v01",createdAt:11,title:"Turistas no Porto falam do Dunas — reação espontânea",format:"Reel",date:"2026-07-04",status:"planned",notes:"Entrevistas em inglês com turistas — Matheus conduz"},
+  {id:"s2v02",createdAt:12,title:"O porto visto de quem mora perto — segunda entrevista",format:"Reel",date:"2026-07-07",status:"planned",notes:"Segundo bloco — variar perfis de turistas"},
+  {id:"s2v03",createdAt:13,title:"Matheus no Porto: o que os turistas nos ensinaram sobre o Dunas",format:"Reel",date:"2026-07-11",status:"planned",notes:"Síntese — conecta depoimentos ao argumento de valorização"},
+  {id:"s2v04",createdAt:14,title:"Morar perto do Porto não é sorte — é estratégia",format:"Reel",date:"2026-07-14",status:"planned",notes:"Argumento direto — câmera Matheus. Relaciona localização à tese de investimento"},
+  {id:"s2v05",createdAt:15,title:"Do Porto ao Dunas: quanto tempo leva de cada ponto da cidade?",format:"Reel",date:"2026-07-18",status:"planned",notes:"⚠ MEDIR distâncias reais antes da gravação — placeholder no roteiro V5"},
   // ── CONTEÚDO DE OBRA ──
-  {id:"obra01",title:"Visita de obra — andamento atual (Jun/2026)",format:"Reel",date:"2026-06-20",status:"planned",notes:"Prova de Obra — mostrar evolução real da construção"},
-  {id:"obra02",title:"Acabamentos: porcelanato 90×90 sendo instalado",format:"Reel",date:"2026-07-25",status:"planned",notes:"Diferencial técnico visível — registrar na obra"}
+  {id:"obra01",createdAt:16,title:"Visita de obra — andamento atual (Jun/2026)",format:"Reel",date:"2026-06-20",status:"planned",notes:"Prova de Obra — mostrar evolução real da construção"},
+  {id:"obra02",createdAt:17,title:"Acabamentos: porcelanato 90×90 sendo instalado",format:"Reel",date:"2026-07-25",status:"planned",notes:"Diferencial técnico visível — registrar na obra"}
 ];
 
 // ─── FIRESTORE ────────────────────────────
@@ -419,12 +419,33 @@ async function setUnitStatus(status) {
 function closeUnitModal() { document.getElementById("unit-modal").classList.remove("open"); }
 
 // ─── PHASES RENDER ────────────────────────
+// ─── SORT STATE ───────────────────────────
+let phaseSortMode   = "recent"; // "recent" | "date"
+let contentSortMode = "recent"; // "recent" | "date"
+
+function getSortedPhases() {
+  const arr = [...phases];
+  if (phaseSortMode === "date") {
+    arr.sort((a,b) => (a.startDate||"").localeCompare(b.startDate||""));
+  } else {
+    arr.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+  }
+  return arr;
+}
+
+function setPhaseSortMode(mode, btn) {
+  phaseSortMode = mode;
+  document.querySelectorAll("#phase-sort-toggle .sort-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderPhases();
+}
+
 function renderPhases() {
   const cont = document.getElementById("phases-container");
   if (!cont) return;
   cont.innerHTML = "";
 
-  phases.forEach(p => {
+  getSortedPhases().forEach(p => {
     const isMilestone = p.status === "milestone";
     const badge  = {done:"Concluído",active:"Em andamento",planned:"Planejado",milestone:"Previsto"}[p.status]||"Planejado";
     const bClass = {done:"done",active:"curr",planned:"plan",milestone:"plan"}[p.status]||"plan";
@@ -546,6 +567,7 @@ function openPhaseModal(id) {
   document.getElementById("pm-progress-val").textContent = p.progress + "%";
   document.getElementById("pm-tags").value     = (p.tags||[]).join("\n");
   document.getElementById("pm-completed").value = p.completedAt || "";
+  document.getElementById("pm-startdate").value  = p.startDate || "";
   document.getElementById("phase-modal").classList.add("open");
 }
 
@@ -553,8 +575,8 @@ function openNewPhaseModal() {
   const newId = "p" + Date.now();
   const newOrder = Math.max(...phases.map(p=>p.order||0)) + 1;
   // Add blank phase to array temporarily
-  phases.push({id:newId,order:newOrder,name:"",dates:"",status:"planned",progress:0,
-               completedAt:null,tags:[],updates:[]});
+  phases.push({id:newId,order:newOrder,name:"",dates:"",startDate:"",status:"planned",progress:0,
+               completedAt:null,createdAt:Date.now(),tags:[],updates:[]});
   openPhaseModal(newId);
 }
 
@@ -606,6 +628,7 @@ async function savePhase() {
   const data = {
     name:        document.getElementById("pm-name").value,
     dates:       document.getElementById("pm-dates").value,
+    startDate:   document.getElementById("pm-startdate").value || null,
     status,
     progress:    parseInt(document.getElementById("pm-progress").value)||0,
     tags:        document.getElementById("pm-tags").value.split("\n").map(t=>t.trim()).filter(Boolean),
@@ -616,6 +639,7 @@ async function savePhase() {
   if (existing && !existing.name) {
     // New phase — set doc
     data.order = existing.order;
+    data.createdAt = existing.createdAt || Date.now();
     data.updates = [];
     await setDoc(doc(db,"dunas","dados","phases",id), data);
     Object.assign(existing, data);
@@ -628,6 +652,23 @@ async function savePhase() {
 }
 
 function closePhaseModal() { document.getElementById("phase-modal").classList.remove("open"); }
+
+function getSortedContent() {
+  const arr = [...contentItems];
+  if (contentSortMode === "date") {
+    arr.sort((a,b) => (a.date||"").localeCompare(b.date||""));
+  } else {
+    arr.sort((a,b) => (b.createdAt||0) - (a.createdAt||0));
+  }
+  return arr;
+}
+
+function setContentSortMode(mode, btn) {
+  contentSortMode = mode;
+  document.querySelectorAll("#content-sort-toggle .sort-btn").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderContent();
+}
 
 // ─── CONTENT RENDER ───────────────────────
 function renderContent() {
@@ -643,7 +684,7 @@ function renderContent() {
     cont.innerHTML=`<div style="padding:40px;text-align:center;color:var(--text-m)">Nenhum conteúdo cadastrado ainda.<br>Clique em "Novo conteúdo" para começar.</div>`;
     return;
   }
-  contentItems.forEach(c=>{
+  getSortedContent().forEach(c=>{
     const sc=STATUS_CONTENT[c.status]||STATUS_CONTENT.planned;
     const row=document.createElement("div"); row.className="content-row";
     const fmt_colors={Reel:"#C9A96E",Story:"#7A9FC9",Carrossel:"#7EB87A",Feed:"#9B8EC4"};
@@ -670,7 +711,7 @@ function formatDate(d) {
 
 // ─── CONTENT MODAL ────────────────────────
 function openContentModal(id) {
-  const c=id?contentItems.find(x=>x.id===id):{id:"c"+Date.now(),title:"",format:"Reel",date:"",status:"planned",notes:""};
+  const c=id?contentItems.find(x=>x.id===id):{id:"c"+Date.now(),title:"",format:"Reel",date:"",status:"planned",notes:"",createdAt:Date.now()};
   if(!c) return;
   document.getElementById("cm-id").value=c.id;
   document.getElementById("cm-title").value=c.title;
@@ -678,18 +719,20 @@ function openContentModal(id) {
   document.getElementById("cm-date").value=c.date||"";
   document.getElementById("cm-status").value=c.status||"planned";
   document.getElementById("cm-notes").value=c.notes||"";
+  document.getElementById("cm-createdat").value=c.createdAt||Date.now();
   document.getElementById("content-modal-title").textContent=id?"Editar conteúdo":"Novo conteúdo";
   document.getElementById("content-modal").classList.add("open");
 }
 
 async function saveContentItem() {
   const item={
-    id:     document.getElementById("cm-id").value,
-    title:  document.getElementById("cm-title").value,
-    format: document.getElementById("cm-format").value,
-    date:   document.getElementById("cm-date").value,
-    status: document.getElementById("cm-status").value,
-    notes:  document.getElementById("cm-notes").value
+    id:        document.getElementById("cm-id").value,
+    title:     document.getElementById("cm-title").value,
+    format:    document.getElementById("cm-format").value,
+    date:      document.getElementById("cm-date").value,
+    status:    document.getElementById("cm-status").value,
+    notes:     document.getElementById("cm-notes").value,
+    createdAt: parseInt(document.getElementById("cm-createdat").value)||Date.now()
   };
   if(!item.title) { toast("Preencha o título","error"); return; }
   await saveContent(item);
@@ -738,8 +781,11 @@ function toast(msg,type="success") {
 Object.assign(window,{
   switchTab,setView,doLogin,doLogout,
   openUnitModal,setUnitStatus,closeUnitModal,
-  openPhaseModal,savePhase,closePhaseModal,
-  openContentModal,saveContentItem,confirmDeleteContent,closeContentModal
+  openPhaseModal,openNewPhaseModal,savePhase,closePhaseModal,
+  openUpdateModal,saveUpdate,closeUpdateModal,
+  setPhaseSortMode,setContentSortMode,
+  openContentModal,saveContentItem,confirmDeleteContent,closeContentModal,
+  doForgotPassword,togglePassword
 });
 
 // ─── FORGOT PASSWORD ──────────────────────
@@ -795,13 +841,7 @@ function playLoginAnimation() {
   seq.forEach(([ms, fn]) => setTimeout(fn, ms));
 }
 
-Object.assign(window, {
-  switchTab, setView, doLogin, doLogout,
-  openUnitModal, setUnitStatus, closeUnitModal,
-  openPhaseModal, savePhase, closePhaseModal,
-  openContentModal, saveContentItem, confirmDeleteContent, closeContentModal,
-  doForgotPassword, togglePassword,
-});
+// (doForgotPassword e togglePassword expostos junto com os demais abaixo)
 
 document.addEventListener("DOMContentLoaded", () => {
   // Facade image
@@ -895,6 +935,11 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
 .view-toggle{display:flex;gap:6px;margin-bottom:12px;}
 .vt-btn{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--text-m);font:12px "DM Sans",sans-serif;letter-spacing:.05em;padding:7px 14px;border-radius:20px;cursor:pointer;transition:all .25s;}
 .vt-btn.active,.vt-btn:hover{background:rgba(201,169,110,.08);border-color:rgba(201,169,110,.3);color:var(--gold);}
+
+/* SORT TOGGLE */
+.sort-toggle{display:flex;gap:6px;flex-shrink:0;}
+.sort-btn{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:var(--text-m);font:11px "DM Sans",sans-serif;letter-spacing:.04em;padding:6px 13px;border-radius:16px;cursor:pointer;transition:all .2s;white-space:nowrap;}
+.sort-btn.active,.sort-btn:hover{background:rgba(201,169,110,.08);border-color:rgba(201,169,110,.3);color:var(--gold);}
 
 /* FACADE */
 .facade-container{position:relative;width:100%;border-radius:12px;overflow:hidden;border:1px solid rgba(201,169,110,.15);box-shadow:0 0 0 1px rgba(0,0,0,.5),0 24px 80px rgba(0,0,0,.6);}
@@ -1454,6 +1499,10 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
 <div class="page">
   <div class="section-header">
     <div><div class="page-title">Cronograma de Obra</div><div class="page-sub">Dunas Residencial · Entrega prevista: Dezembro 2026</div></div>
+    <div class="sort-toggle" id="phase-sort-toggle">
+      <button class="sort-btn active" onclick="setPhaseSortMode('recent',this)">Mais recentes</button>
+      <button class="sort-btn" onclick="setPhaseSortMode('date',this)">Por data</button>
+    </div>
   </div>
   <div class="crono-layout">
     <div class="timeline"><div class="tl-line"></div><div id="phases-container"></div></div>
@@ -1485,7 +1534,13 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
 <div class="page">
   <div class="section-header">
     <div><div class="page-title">Planejamento de Conteúdo</div><div class="page-sub">Calendário editorial · Dunas Residencial</div></div>
-    <button class="btn-primary" onclick="openContentModal(null)">+ Novo conteúdo</button>
+    <div style="display:flex;gap:10px;align-items:center">
+      <div class="sort-toggle" id="content-sort-toggle">
+        <button class="sort-btn active" onclick="setContentSortMode('recent',this)">Mais recentes</button>
+        <button class="sort-btn" onclick="setContentSortMode('date',this)">Por data</button>
+      </div>
+      <button class="btn-primary" onclick="openContentModal(null)">+ Novo conteúdo</button>
+    </div>
   </div>
   <div class="content-table-wrap">
     <div class="content-header-row"><span>Data</span><span>Formato</span><span>Título</span><span>Status</span><span>Observações</span><span></span></div>
@@ -1549,6 +1604,7 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
       <label class="modal-lbl">Progresso — <span id="pm-progress-val">0%</span></label>
       <input class="modal-range" id="pm-progress" type="range" min="0" max="100" value="0">
     </div>
+    <div class="modal-field"><label class="modal-lbl">Data de início (usada na ordenação "Por data")</label><input class="modal-input" id="pm-startdate" type="date"></div>
     <div class="modal-field"><label class="modal-lbl">Marcos / Etapas (um por linha)</label><textarea class="modal-textarea" id="pm-tags"></textarea></div>
     <div class="modal-field"><label class="modal-lbl">Data de conclusão (se concluída)</label><input class="modal-input" id="pm-completed" type="date"></div>
     <div class="modal-footer">
@@ -1563,6 +1619,7 @@ body::after{content:"";position:fixed;inset:0;background-image:url("data:image/s
   <div class="modal">
     <div class="modal-title" id="content-modal-title">Novo conteúdo</div>
     <input type="hidden" id="cm-id">
+    <input type="hidden" id="cm-createdat">
     <div class="modal-field"><label class="modal-lbl">Título</label><input class="modal-input" id="cm-title" type="text" placeholder="Ex: Visita de obra — andamento estrutural"></div>
     <div class="modal-field">
       <label class="modal-lbl">Formato</label>
